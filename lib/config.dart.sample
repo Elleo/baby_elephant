@@ -1,0 +1,2 @@
+const instance = "your.instance";
+const secret_key = "supersecretclientkey";
