@@ -13,7 +13,7 @@ class TimelinePage extends StatefulWidget {
 class _TimelinePageState extends State<TimelinePage> {
   final mastodon = MastodonApi(
     instance: instance,
-    bearerToken: secret_key,
+    bearerToken: accessToken,
     retryConfig: RetryConfig.ofExponentialBackOffAndJitter(maxAttempts: 5),
     timeout: const Duration(seconds: 20),
   );
