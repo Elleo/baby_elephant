@@ -77,6 +77,7 @@ class _TimelinePageState extends State<TimelinePage> {
                               height: 32)),
                       const SizedBox(width: 5),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                               items[i].account.displayName != ""

@@ -1,7 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mikeasoft.baby_elephant">
+    <!-- Required for ambient mode support -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Flags the app as a Wear app -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
    <application
-        android:label="toot_toot"
+        android:label="Baby Elephant"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -28,7 +34,7 @@
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
-            android:name="flutterEmbedding"
-            android:value="2" />
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
     </application>
 </manifest>
