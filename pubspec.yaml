@@ -13,6 +13,7 @@ dependencies:
   mastodon_api: ^0.1.0
   pull_to_refresh: ^2.0.0
   flutter_widget_from_html_core: ^0.9.0+2
+  flutter_native_splash: ^2.2.16
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +29,8 @@ flutter:
 
   assets:
       - assets/elephant.png
+
+flutter_native_splash:
+    color: "#ffffff"
+    image: assets/elephant.png
+
