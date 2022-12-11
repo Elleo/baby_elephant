@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:mastodon_api/mastodon_api.dart';
+import 'package:wearable_rotary/wearable_rotary.dart';
 import "config.dart";
 
 class TimelinePage extends StatefulWidget {
@@ -96,6 +97,7 @@ class _TimelinePageState extends State<TimelinePage> {
               child: SizedBox(
                   height: 64, width: 64, child: CircularProgressIndicator()))
           : ListView.builder(
+              controller: RotaryScrollController(),
               itemBuilder: (c, i) => Card(
                   clipBehavior: Clip.hardEdge,
                   margin: const EdgeInsets.only(
