@@ -25,27 +25,47 @@ class _TimelinePageState extends State<TimelinePage> {
       RefreshController(initialRefresh: false);
 
   void onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    refreshController.refreshCompleted();
+    updateTimeline(true);
+  }
+
+  void updateTimeline(bool refresh) async {
+    String? maxId;
+    String? minId;
+    if (refresh) {
+      minId = newestStatus;
+    } else {
+      maxId = oldestStatus;
+    }
+    var tlFuture = mastodon.v1.timelines
+        .lookupHomeTimeline(minStatusId: minId, maxStatusId: maxId);
+    tlFuture.then((timeline) => {
+          setState(() {
+            if (refresh && timeline.data.isNotEmpty) {
+              newestStatus = timeline.data[0].id;
+            }
+            timeline.data.forEach((status) {
+              if (status.content.isNotEmpty) {
+                if (refresh) {
+                  items.insert(0, status);
+                } else {
+                  items.add(status);
+                }
+              }
+              if (!refresh) {
+                oldestStatus = status.id;
+              }
+            });
+            if (refresh) {
+              refreshController.refreshCompleted();
+            } else {
+              refreshController.loadComplete();
+            }
+          })
+        });
   }
 
   void onLoading() async {
-    // monitor network fetch
-    var tlFuture =
-        mastodon.v1.timelines.lookupHomeTimeline(maxStatusId: oldestStatus);
-    tlFuture.then((timeline) => {
-          setState(() {
-            timeline.data.forEach((status) {
-              if (status.content.isNotEmpty) {
-                items.add(status);
-              }
-              oldestStatus = status.id;
-            });
-            refreshController.loadComplete();
-          })
-        });
+    updateTimeline(false);
   }
 
   @override
@@ -60,6 +80,7 @@ class _TimelinePageState extends State<TimelinePage> {
       onLoading: onLoading,
       child: ListView.builder(
         itemBuilder: (c, i) => Card(
+            clipBehavior: Clip.hardEdge,
             margin:
                 const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
             shape:
@@ -84,6 +105,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                   ? items[i].account.displayName
                                   : items[i].account.username,
                               textAlign: TextAlign.left,
+                              overflow: TextOverflow.clip,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
                           Text(
