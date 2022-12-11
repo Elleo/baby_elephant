@@ -15,6 +15,7 @@ dependencies:
   flutter_widget_from_html_core: ^0.9.0+2
   flutter_native_splash: ^2.2.16
   wearable_rotary: ^2.0.0
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -23,7 +24,7 @@ dev_dependencies:
 
 flutter_icons:
     android: "launcher_icon"
-    image_path: "images/elephant.png"
+    image_path: "assets/elephant.png"
 
 flutter:
   uses-material-design: true
