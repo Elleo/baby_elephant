@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:mastodon_api/mastodon_api.dart';
 import "timeline.dart";
+import "toot.dart";
+import "config.dart";
 
 void main() {
-  runApp(const TootApp());
+  runApp(TootApp());
 }
 
 class TootApp extends StatelessWidget {
-  const TootApp({super.key});
+  TootApp({super.key});
+
+  final PageController _controller = PageController(initialPage: 1);
+
+  final mastodon = MastodonApi(
+    instance: instance,
+    bearerToken: accessToken,
+    retryConfig: RetryConfig.ofExponentialBackOffAndJitter(maxAttempts: 5),
+    timeout: const Duration(seconds: 20),
+  );
 
   // This widget is the root of your application.
   @override
@@ -21,7 +33,13 @@ class TootApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.black,
           primarySwatch: Colors.blueGrey),
       themeMode: ThemeMode.dark,
-      home: const TimelinePage(),
+      home: PageView(
+        controller: _controller,
+        children: [
+          TootPage(mastodon: mastodon),
+          TimelinePage(mastodon: mastodon),
+        ],
+      ),
     );
   }
 }

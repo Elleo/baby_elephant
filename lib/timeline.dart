@@ -3,29 +3,24 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:mastodon_api/mastodon_api.dart';
 import 'package:wearable_rotary/wearable_rotary.dart';
-import "config.dart";
 
 class TimelinePage extends StatefulWidget {
-  const TimelinePage({super.key});
+  final MastodonApi mastodon;
+  const TimelinePage({super.key, required this.mastodon});
   @override
-  State<TimelinePage> createState() => _TimelinePageState();
+  State<TimelinePage> createState() =>
+      _TimelinePageState(mastodon: this.mastodon);
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  final mastodon = MastodonApi(
-    instance: instance,
-    bearerToken: accessToken,
-    retryConfig: RetryConfig.ofExponentialBackOffAndJitter(maxAttempts: 5),
-    timeout: const Duration(seconds: 20),
-  );
-
   String? newestStatus;
   String? oldestStatus;
+  final MastodonApi mastodon;
   List<Status> items = [];
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
-  _TimelinePageState() {
+  _TimelinePageState({required this.mastodon}) {
     updateTimeline(false);
   }
 
