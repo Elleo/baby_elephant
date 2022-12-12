@@ -1,5 +1,7 @@
 # Baby Elephant
 
+<img align="right" src="/docs/hometimeline.jpg" alt="The home timeline being displayed on a Pixel Watch" width="320px" />
+
 A mastodon client for WearOS based smart watches.
 
 ## Installation
@@ -10,16 +12,16 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 
 ## Roadmap
 
-[X] Home timeline
-[X] Render avatars
-[X] Crown/rotary scrolling support
-[ ] Sending toots
-[ ] Notifications
-[ ] Local timeline
-[ ] Federated timeline
-[ ] Render images in toots
-[ ] Show boosted posts
-[ ] Handle CWs
-[ ] Expanded toot view (see favourites, boosts, replies, etc.)
-[ ] Support polls
-[ ] Companion client for authentication
+- [X] Home timeline
+- [X] Render avatars
+- [X] Crown/rotary scrolling support
+- [ ] Sending toots
+- [ ] Notifications
+- [ ] Local timeline
+- [ ] Federated timeline
+- [ ] Render images in toots
+- [ ] Show boosted posts
+- [ ] Handle CWs
+- [ ] Expanded toot view (see favourites, boosts, replies, etc.)
+- [ ] Support polls
+- [ ] Companion client for authentication
