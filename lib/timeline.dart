@@ -3,6 +3,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:mastodon_api/mastodon_api.dart';
 import 'package:wearable_rotary/wearable_rotary.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class TimelinePage extends StatefulWidget {
   final MastodonApi mastodon;
@@ -30,6 +31,9 @@ class _TimelinePageState extends State<TimelinePage> {
       required this.statuses,
       required this.timeline}) {
     updateTimeline(false);
+    Fluttertoast.showToast(
+        msg: timeline[0].toUpperCase() + timeline.substring(1),
+        gravity: ToastGravity.BOTTOM);
   }
 
   void onRefresh() async {

@@ -16,6 +16,7 @@ dependencies:
   flutter_native_splash: ^2.2.16
   wearable_rotary: ^2.0.0
   flutter_launcher_icons: ^0.11.0
+  fluttertoast: ^8.1.2
 
 dev_dependencies:
   flutter_test:
