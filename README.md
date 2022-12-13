@@ -17,8 +17,8 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [X] Crown/rotary scrolling support
 - [ ] Sending toots
 - [ ] Notifications
-- [ ] Local timeline
-- [ ] Federated timeline
+- [X] Local timeline
+- [X] Federated timeline
 - [ ] Render images in toots
 - [ ] Show boosted posts
 - [ ] Handle CWs
