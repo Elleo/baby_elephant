@@ -6,21 +6,22 @@ import 'package:wearable_rotary/wearable_rotary.dart';
 
 class TimelinePage extends StatefulWidget {
   final MastodonApi mastodon;
-  const TimelinePage({super.key, required this.mastodon});
+  final List<Status> items;
+  const TimelinePage({super.key, required this.mastodon, required this.items});
   @override
   State<TimelinePage> createState() =>
-      _TimelinePageState(mastodon: this.mastodon);
+      _TimelinePageState(mastodon: this.mastodon, items: this.items);
 }
 
 class _TimelinePageState extends State<TimelinePage> {
   String? newestStatus;
   String? oldestStatus;
   final MastodonApi mastodon;
-  List<Status> items = [];
+  final List<Status> items;
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
-  _TimelinePageState({required this.mastodon}) {
+  _TimelinePageState({required this.mastodon, required this.items}) {
     updateTimeline(false);
   }
 
