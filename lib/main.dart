@@ -20,7 +20,9 @@ class TootApp extends StatelessWidget {
     timeout: const Duration(seconds: 20),
   );
 
-  final List<Status> homeItems = [];
+  final List<Status> homeStatuses = [];
+  final List<Status> localStatuses = [];
+  final List<Status> federatedStatuses = [];
 
   // This widget is the root of your application.
   @override
@@ -39,7 +41,14 @@ class TootApp extends StatelessWidget {
         controller: _controller,
         children: [
           TootPage(mastodon: mastodon),
-          TimelinePage(mastodon: mastodon, items: homeItems),
+          TimelinePage(
+              mastodon: mastodon, statuses: homeStatuses, timeline: "home"),
+          TimelinePage(
+              mastodon: mastodon, statuses: localStatuses, timeline: "local"),
+          TimelinePage(
+              mastodon: mastodon,
+              statuses: federatedStatuses,
+              timeline: "federated"),
         ],
       ),
     );
