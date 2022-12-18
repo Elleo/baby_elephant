@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mastodon_api/mastodon_api.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import "timeline.dart";
 import "toot.dart";
 import "config.dart";
@@ -27,30 +28,41 @@ class TootApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Toot Toot!',
-      theme: ThemeData(
-          brightness: Brightness.light, primarySwatch: Colors.blueGrey),
-      darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          /* dark theme settings */
-          scaffoldBackgroundColor: Colors.black,
-          primarySwatch: Colors.blueGrey),
-      themeMode: ThemeMode.dark,
-      home: PageView(
-        controller: _controller,
-        children: [
-          TootPage(mastodon: mastodon),
-          TimelinePage(
-              mastodon: mastodon, statuses: homeStatuses, timeline: "home"),
-          TimelinePage(
-              mastodon: mastodon, statuses: localStatuses, timeline: "local"),
-          TimelinePage(
-              mastodon: mastodon,
-              statuses: federatedStatuses,
-              timeline: "federated"),
-        ],
-      ),
-    );
+    return RefreshConfiguration(
+        headerTriggerDistance: 40,
+        footerTriggerDistance: 15,
+        dragSpeedRatio: 0.91,
+        headerBuilder: () => const MaterialClassicHeader(),
+        footerBuilder: () => const ClassicFooter(),
+        enableLoadingWhenNoData: false,
+        enableRefreshVibrate: false,
+        enableLoadMoreVibrate: false,
+        child: MaterialApp(
+          title: 'Toot Toot!',
+          theme: ThemeData(
+              brightness: Brightness.light, primarySwatch: Colors.blueGrey),
+          darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              /* dark theme settings */
+              scaffoldBackgroundColor: Colors.black,
+              primarySwatch: Colors.blueGrey),
+          themeMode: ThemeMode.dark,
+          home: PageView(
+            controller: _controller,
+            children: [
+              TootPage(mastodon: mastodon),
+              TimelinePage(
+                  mastodon: mastodon, statuses: homeStatuses, timeline: "home"),
+              TimelinePage(
+                  mastodon: mastodon,
+                  statuses: localStatuses,
+                  timeline: "local"),
+              TimelinePage(
+                  mastodon: mastodon,
+                  statuses: federatedStatuses,
+                  timeline: "federated"),
+            ],
+          ),
+        ));
   }
 }

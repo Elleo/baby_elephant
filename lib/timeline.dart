@@ -101,7 +101,6 @@ class _TimelinePageState extends State<TimelinePage> {
         body: SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
-      header: const MaterialClassicHeader(distance: 10),
       controller: refreshController,
       onRefresh: onRefresh,
       onLoading: onLoading,
