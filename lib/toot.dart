@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mastodon_api/mastodon_api.dart' as mapi;
 
 class TootPage extends StatefulWidget {
@@ -29,6 +30,7 @@ class _TootPageState extends State<TootPage> {
             child: ElevatedButton(
                 onPressed: () {
                   textFocus.requestFocus();
+                  SystemChannels.textInput.invokeMethod('TextInput.show');
                 },
                 child: const Text("Toot! Toot!")),
           ),
