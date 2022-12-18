@@ -15,7 +15,7 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [X] Home timeline
 - [X] Render avatars
 - [X] Crown/rotary scrolling support
-- [ ] Sending toots
+- [X] Sending toots
 - [ ] Notifications
 - [X] Local timeline
 - [X] Federated timeline
@@ -23,5 +23,6 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [ ] Show boosted posts
 - [ ] Handle CWs
 - [ ] Expanded toot view (see favourites, boosts, replies, etc.)
+- [ ] Sending replies
 - [ ] Support polls
 - [ ] Companion client for authentication
