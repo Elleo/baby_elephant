@@ -28,19 +28,17 @@ class _TootPageState extends State<TootPage> {
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(
                 onPressed: () {
-                  textFocus.unfocus();
                   textFocus.requestFocus();
                 },
                 child: const Text("Toot! Toot!")),
           ),
           TextField(
-            controller: textController,
-            focusNode: textFocus,
-            onSubmitted: (value) {
-              mastodon.v1.statuses.createStatus(text: value);
-              textController.clear();
-            },
-          )
+              controller: textController,
+              focusNode: textFocus,
+              onSubmitted: (value) {
+                mastodon.v1.statuses.createStatus(text: value);
+                textController.clear();
+              })
         ]));
   }
 }
