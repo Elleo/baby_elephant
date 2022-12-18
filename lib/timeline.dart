@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:mastodon_api/mastodon_api.dart';
+import 'package:mastodon_api/mastodon_api.dart' as mApi;
 import 'package:wearable_rotary/wearable_rotary.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class TimelinePage extends StatefulWidget {
-  final MastodonApi mastodon;
-  final List<Status> statuses;
+  final mApi.MastodonApi mastodon;
+  final List<mApi.Status> statuses;
   final String timeline;
   const TimelinePage(
       {super.key,
@@ -20,9 +20,10 @@ class TimelinePage extends StatefulWidget {
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  final MastodonApi mastodon;
-  final List<Status> statuses;
+  final mApi.MastodonApi mastodon;
+  final List<mApi.Status> statuses;
   final String timeline;
+  List<String> revealedStatuses = [];
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
@@ -51,7 +52,7 @@ class _TimelinePageState extends State<TimelinePage> {
       }
     }
     try {
-      Future<MastodonResponse<List<Status>>> tlFuture;
+      Future<mApi.MastodonResponse<List<mApi.Status>>> tlFuture;
       if (timeline == "home") {
         tlFuture = mastodon.v1.timelines
             .lookupHomeTimeline(minStatusId: minId, maxStatusId: maxId);
@@ -82,7 +83,7 @@ class _TimelinePageState extends State<TimelinePage> {
               }
             })
           });
-    } on DataNotFoundException catch (_) {
+    } on mApi.DataNotFoundException catch (_) {
       if (refresh) {
         refreshController.refreshCompleted();
       } else {
@@ -150,7 +151,23 @@ class _TimelinePageState extends State<TimelinePage> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Center(child: HtmlWidget(statuses[i].content)),
+                        Center(
+                            child: HtmlWidget(statuses[i].spoilerText != ""
+                                ? statuses[i].spoilerText
+                                : statuses[i].content)),
+                        Visibility(
+                            visible: statuses[i].spoilerText != "" &&
+                                !revealedStatuses.contains(statuses[i].id),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    revealedStatuses.add(statuses[i].id);
+                                  });
+                                },
+                                child: const Text("Show More"))),
+                        Visibility(
+                            visible: revealedStatuses.contains(statuses[i].id),
+                            child: HtmlWidget(statuses[i].content))
                       ]))),
               itemCount: statuses.length,
             ),
