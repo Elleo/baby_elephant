@@ -30,7 +30,6 @@ class TootApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshConfiguration(
         headerTriggerDistance: 40,
-        footerTriggerDistance: 15,
         dragSpeedRatio: 0.91,
         headerBuilder: () => const MaterialClassicHeader(),
         footerBuilder: () => const ClassicFooter(),
