@@ -22,14 +22,14 @@ flutter:
 
   uses-material-design: true
   assets:
-    - ../assets/elephant.png
+    - assets/elephant.png
 
 flutter_native_splash:
   color: "#ffffff"
-  image: ../assets/elephant.png
+  image: assets/elephant.png
 
 flutter_icons:
   android: "launcher_icon"  
-  image_path: "../assets/elephant.png"
+  image_path: "assets/elephant.png"
 
 

@@ -7,7 +7,6 @@ void main() {
 class Friend extends StatelessWidget {
   const Friend({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,10 +35,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const <Widget>[
-            Text(
-                'Start Baby Elephant on your watch and this app will help you to log in to your Mastodon account.'),
+            Image(image: AssetImage("assets/elephant.png")),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Text(
+                  'This app is a companion to the Baby Elephant app for Wear OS smartwatches.\n\nStart Baby Elephant on your watch and this app will help you log in to your Mastodon account.'),
+            ),
+            SizedBox(height: 100)
           ],
         ),
       ),
