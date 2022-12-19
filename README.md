@@ -37,3 +37,5 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+[![Powered by mastodon_api](https://img.shields.io/badge/Powered%20by-mastodon_api-00acee.svg?style=for-the-badge)](https://github.com/mastodon-dart/mastodon-api)
