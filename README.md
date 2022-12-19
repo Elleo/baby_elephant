@@ -26,3 +26,14 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [ ] Sending replies
 - [ ] Support polls
 - [ ] Companion client for authentication
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
