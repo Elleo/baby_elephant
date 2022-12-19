@@ -9,7 +9,7 @@ class TimelinePage extends StatefulWidget {
   final mApi.MastodonApi mastodon;
   final List<mApi.Status> statuses;
   final String timeline;
-  TimelinePage(
+  const TimelinePage(
       {super.key,
       required this.mastodon,
       required this.statuses,

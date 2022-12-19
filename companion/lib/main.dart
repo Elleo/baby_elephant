@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'auth.dart';
 
 void main() {
   runApp(const Friend());
@@ -36,14 +37,25 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const <Widget>[
-            Image(image: AssetImage("assets/elephant.png")),
-            Padding(
+          children: <Widget>[
+            const Image(image: AssetImage("assets/elephant.png")),
+            const Padding(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Text(
                   'This app is a companion to the Baby Elephant app for Wear OS smartwatches.\n\nStart Baby Elephant on your watch and this app will help you log in to your Mastodon account.'),
             ),
-            SizedBox(height: 100)
+            const SizedBox(height: 100),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    padding: const EdgeInsets.fromLTRB(40, 20, 40, 20)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AuthPage()),
+                  );
+                },
+                child: const Text("Launch Auth")),
           ],
         ),
       ),
