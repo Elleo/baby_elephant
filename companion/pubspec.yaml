@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  flutter_icons: ^1.1.0
+  flutter_native_splash: ^2.2.16
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +21,15 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - ../assets/elephant.png
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: ../assets/elephant.png
+
+flutter_icons:
+  android: "launcher_icon"  
+  image_path: "../assets/elephant.png"
+
+
