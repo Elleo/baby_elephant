@@ -1,4 +1,7 @@
 # Baby Elephant
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors) [![Powered by mastodon_api](https://img.shields.io/badge/Powered%20by-mastodon_api-00acee.svg?style=flat-square)](https://github.com/mastodon-dart/mastodon-api)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <img align="right" src="/docs/hometimeline.jpg" alt="The home timeline being displayed on a Pixel Watch" width="320px" />
 
@@ -32,10 +35,22 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/Elleo"><img src="https://avatars.githubusercontent.com/u/59350?v=4?s=100" width="100px;" alt="Mike Sheldon"/><br /><sub><b>Mike Sheldon</b></sub></a><br /><a href="https://github.com/Elleo/baby_elephant/commits?author=Elleo" title="Code">💻</a> <a href="#design-Elleo" title="Design">🎨</a> <a href="#ideas-Elleo" title="Ideas, Planning, & Feedback">🤔</a> <a href="#platform-Elleo" title="Packaging/porting to new platform">📦</a> <a href="#projectManagement-Elleo" title="Project Management">📆</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 
-[![Powered by mastodon_api](https://img.shields.io/badge/Powered%20by-mastodon_api-00acee.svg?style=for-the-badge)](https://github.com/mastodon-dart/mastodon-api)
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
