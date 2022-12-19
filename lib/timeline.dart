@@ -9,31 +9,28 @@ class TimelinePage extends StatefulWidget {
   final mApi.MastodonApi mastodon;
   final List<mApi.Status> statuses;
   final String timeline;
-  const TimelinePage(
+  TimelinePage(
       {super.key,
       required this.mastodon,
       required this.statuses,
       required this.timeline});
   @override
-  State<TimelinePage> createState() => _TimelinePageState(
-      mastodon: mastodon, statuses: statuses, timeline: timeline);
+  State<TimelinePage> createState() => _TimelinePageState();
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  final mApi.MastodonApi mastodon;
-  final List<mApi.Status> statuses;
-  final String timeline;
   List<String> revealedStatuses = [];
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
-  _TimelinePageState(
-      {required this.mastodon,
-      required this.statuses,
-      required this.timeline}) {
+  _TimelinePageState() : super();
+
+  @override
+  void initState() {
+    super.initState();
     updateTimeline(false);
     Fluttertoast.showToast(
-        msg: timeline[0].toUpperCase() + timeline.substring(1),
+        msg: widget.timeline[0].toUpperCase() + widget.timeline.substring(1),
         gravity: ToastGravity.BOTTOM);
   }
 
@@ -44,44 +41,47 @@ class _TimelinePageState extends State<TimelinePage> {
   void updateTimeline(bool refresh) async {
     String? maxId;
     String? minId;
-    if (statuses.isNotEmpty) {
+    if (widget.statuses.isNotEmpty) {
       if (refresh) {
-        minId = statuses.first.id;
+        minId = widget.statuses.first.id;
       } else {
-        maxId = statuses.last.id;
+        maxId = widget.statuses.last.id;
       }
     }
     try {
       Future<mApi.MastodonResponse<List<mApi.Status>>> tlFuture;
-      if (timeline == "home") {
-        tlFuture = mastodon.v1.timelines
+      if (widget.timeline == "home") {
+        tlFuture = widget.mastodon.v1.timelines
             .lookupHomeTimeline(minStatusId: minId, maxStatusId: maxId);
-      } else if (timeline == "local") {
-        tlFuture = mastodon.v1.timelines.lookupPublicTimeline(
+      } else if (widget.timeline == "local") {
+        tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
             onlyLocal: true, minStatusId: minId, maxStatusId: maxId);
-      } else if (timeline == "federated") {
-        tlFuture = mastodon.v1.timelines.lookupPublicTimeline(
+      } else if (widget.timeline == "federated") {
+        tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
             onlyLocal: false, minStatusId: minId, maxStatusId: maxId);
       } else {
         return;
       }
       tlFuture.then((timeline) => {
-            setState(() {
-              timeline.data.forEach((status) {
-                if (status.content.isNotEmpty) {
+            if (mounted)
+              {
+                setState(() {
+                  timeline.data.forEach((status) {
+                    if (status.content.isNotEmpty) {
+                      if (refresh) {
+                        widget.statuses.insert(0, status);
+                      } else {
+                        widget.statuses.add(status);
+                      }
+                    }
+                  });
                   if (refresh) {
-                    statuses.insert(0, status);
+                    refreshController.refreshCompleted();
                   } else {
-                    statuses.add(status);
+                    refreshController.loadComplete();
                   }
-                }
-              });
-              if (refresh) {
-                refreshController.refreshCompleted();
-              } else {
-                refreshController.loadComplete();
+                })
               }
-            })
           });
     } on mApi.DataNotFoundException catch (_) {
       if (refresh) {
@@ -105,7 +105,7 @@ class _TimelinePageState extends State<TimelinePage> {
       controller: refreshController,
       onRefresh: onRefresh,
       onLoading: onLoading,
-      child: statuses.isEmpty
+      child: widget.statuses.isEmpty
           ? const Center(
               child: SizedBox(
                   height: 64, width: 64, child: CircularProgressIndicator()))
@@ -126,7 +126,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image(
                                     image: NetworkImage(
-                                        statuses[i].account.avatar),
+                                        widget.statuses[i].account.avatar),
                                     width: 32,
                                     height: 32)),
                             const SizedBox(width: 5),
@@ -134,15 +134,15 @@ class _TimelinePageState extends State<TimelinePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    statuses[i].account.displayName != ""
-                                        ? statuses[i].account.displayName
-                                        : statuses[i].account.username,
+                                    widget.statuses[i].account.displayName != ""
+                                        ? widget.statuses[i].account.displayName
+                                        : widget.statuses[i].account.username,
                                     textAlign: TextAlign.left,
                                     overflow: TextOverflow.clip,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold)),
                                 Text(
-                                  "@${statuses[i].account.username}",
+                                  "@${widget.statuses[i].account.username}",
                                   style: const TextStyle(color: Colors.grey),
                                   textAlign: TextAlign.left,
                                 )
@@ -152,24 +152,27 @@ class _TimelinePageState extends State<TimelinePage> {
                         ),
                         const SizedBox(height: 10),
                         Center(
-                            child: HtmlWidget(statuses[i].spoilerText != ""
-                                ? statuses[i].spoilerText
-                                : statuses[i].content)),
+                            child: HtmlWidget(
+                                widget.statuses[i].spoilerText != ""
+                                    ? widget.statuses[i].spoilerText
+                                    : widget.statuses[i].content)),
                         Visibility(
-                            visible: statuses[i].spoilerText != "" &&
-                                !revealedStatuses.contains(statuses[i].id),
+                            visible: widget.statuses[i].spoilerText != "" &&
+                                !revealedStatuses
+                                    .contains(widget.statuses[i].id),
                             child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    revealedStatuses.add(statuses[i].id);
+                                    revealedStatuses.add(widget.statuses[i].id);
                                   });
                                 },
                                 child: const Text("Show More"))),
                         Visibility(
-                            visible: revealedStatuses.contains(statuses[i].id),
-                            child: HtmlWidget(statuses[i].content))
+                            visible: revealedStatuses
+                                .contains(widget.statuses[i].id),
+                            child: HtmlWidget(widget.statuses[i].content))
                       ]))),
-              itemCount: statuses.length,
+              itemCount: widget.statuses.length,
             ),
     ));
   }

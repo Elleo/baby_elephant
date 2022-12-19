@@ -6,16 +6,14 @@ class TootPage extends StatefulWidget {
   final mapi.MastodonApi mastodon;
   const TootPage({super.key, required this.mastodon});
   @override
-  State<TootPage> createState() => _TootPageState(mastodon: mastodon);
+  State<TootPage> createState() => _TootPageState();
 }
 
 class _TootPageState extends State<TootPage> {
-  final mapi.MastodonApi mastodon;
-
   FocusNode textFocus = FocusNode();
   TextEditingController textController = TextEditingController();
 
-  _TootPageState({required this.mastodon}) : super();
+  _TootPageState() : super();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,7 @@ class _TootPageState extends State<TootPage> {
               controller: textController,
               focusNode: textFocus,
               onSubmitted: (value) {
-                mastodon.v1.statuses.createStatus(text: value);
+                widget.mastodon.v1.statuses.createStatus(text: value);
                 textController.clear();
               })
         ]));
