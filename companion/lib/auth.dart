@@ -46,11 +46,14 @@ class _AuthPageState extends State<AuthPage> {
                         clientName: "Baby Elephant Staging",
                         redirectUri:
                             'com.mikeasoft.babyelephant.oauth://callback/',
-                        scopes: mApi.Scope.values,
+                        scopes: [
+                          mApi.Scope.read,
+                          mApi.Scope.write,
+                          mApi.Scope.push
+                        ],
                         websiteUrl: "https://github.com/Elleo/baby_elephant");
 
                 clientFuture.then((client) async {
-                  print(client);
                   final oauth2 = MastodonOAuth2Client(
                     instance: textController.text,
                     clientId: client.data.clientId,
@@ -60,12 +63,11 @@ class _AuthPageState extends State<AuthPage> {
                   );
 
                   try {
-                    final response =
-                        await oauth2.executeAuthCodeFlow(scopes: [Scope.read]);
+                    final response = await oauth2.executeAuthCodeFlow(
+                        scopes: [Scope.read, Scope.write, Scope.push]);
 
                     super.setState(() {
                       accessToken = response.accessToken;
-                      print(accessToken);
                       Navigator.pop(context);
                     });
                   } on PlatformException catch (_) {}
