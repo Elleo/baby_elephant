@@ -85,7 +85,6 @@ class _TimelinePageState extends State<TimelinePage> {
               {
                 setState(() {
                   timeline.data.forEach((status) {
-                    debugPrint(status.toString());
                     if (refresh) {
                       widget.statuses.insert(0, status);
                     } else {
