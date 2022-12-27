@@ -170,7 +170,22 @@ class _TimelinePageState extends State<TimelinePage> {
                         Visibility(
                             visible: revealedStatuses
                                 .contains(widget.statuses[i].id),
-                            child: HtmlWidget(widget.statuses[i].content))
+                            child: HtmlWidget(widget.statuses[i].content)),
+                        Visibility(
+                            visible: widget.statuses[i].spoilerText == "" ||
+                                revealedStatuses
+                                    .contains(widget.statuses[i].id),
+                            child: Column(children: [
+                              for (var media
+                                  in widget.statuses[i].mediaAttachments)
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                    child: Image(
+                                        image: NetworkImage(media.previewUrl),
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                20))
+                            ]))
                       ]))),
               itemCount: widget.statuses.length,
             ),
