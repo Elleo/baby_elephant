@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mastodon_api/mastodon_api.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter/services.dart';
+
 import "timeline.dart";
 import "toot.dart";
 import "config.dart";
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(TootApp());
 }
 
 class TootApp extends StatelessWidget {
-  TootApp({super.key});
+  TootApp({super.key}) {
+    auth();
+  }
 
   final PageController _controller = PageController(initialPage: 1);
 
@@ -25,7 +30,12 @@ class TootApp extends StatelessWidget {
   final List<Status> localStatuses = [];
   final List<Status> federatedStatuses = [];
 
-  // This widget is the root of your application.
+  void auth() async {
+    const platform = MethodChannel('com.mikeasoft.baby_elephant/native');
+    final String result = await platform.invokeMethod("triggerAuth", {});
+    print('RESULT -> $result');
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshConfiguration(
