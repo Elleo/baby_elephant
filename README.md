@@ -5,7 +5,7 @@
 
 <img align="right" src="/docs/hometimeline.jpg" alt="The home timeline being displayed on a Pixel Watch" width="320px" />
 
-A [Mastodon](https://joinmastodon.org) client for WearOS based smart watches.
+A [Mastodon](https://joinmastodon.org) client for WearOS based smartwatches.
 
 ## Installation
 
