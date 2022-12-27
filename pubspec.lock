@@ -215,10 +215,12 @@ packages:
   mastodon_api:
     dependency: "direct main"
     description:
-      name: mastodon_api
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: "7bc636f77069754bd2db8d7d4d0a9b16e9bbf8d0"
+      url: "git@github.com:mastodon-dart/mastodon-api.git"
+    source: git
+    version: "0.2.3"
   matcher:
     dependency: transitive
     description:

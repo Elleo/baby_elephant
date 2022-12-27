@@ -22,7 +22,7 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [ ] Notifications
 - [X] Local timeline
 - [X] Federated timeline
-- [ ] Render images in toots
+- [X] Render images in toots
 - [ ] Show boosted posts
 - [X] Handle CWs
 - [ ] Expanded toot view (see favourites, boosts, replies, etc.)
