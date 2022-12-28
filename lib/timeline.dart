@@ -241,10 +241,10 @@ class _TimelinePageState extends State<TimelinePage> {
                                 ? widget.statuses[i].reblog!.content
                                 : widget.statuses[i].content)),
                         Visibility(
-                            visible: (widget.statuses[i].spoilerText != "" ||
+                            visible: (widget.statuses[i].spoilerText == "" ||
                                     (widget.statuses[i].reblog != null &&
                                         widget.statuses[i].reblog!
-                                                .spoilerText !=
+                                                .spoilerText ==
                                             "")) &&
                                 !revealedStatuses
                                     .contains(widget.statuses[i].id),
@@ -254,7 +254,8 @@ class _TimelinePageState extends State<TimelinePage> {
                                   ? widget.statuses[i].reblog!.mediaAttachments
                                   : widget.statuses[i].mediaAttachments)
                                 Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                     child: Image(
                                         image: NetworkImage(media.previewUrl),
                                         width:
