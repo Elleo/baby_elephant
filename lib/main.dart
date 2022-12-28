@@ -57,12 +57,19 @@ class TootApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Toot Toot!',
           theme: ThemeData(
-              brightness: Brightness.light, primarySwatch: Colors.blueGrey),
+              brightness: Brightness.light,
+              primarySwatch: Colors.blueGrey,
+              pageTransitionsTheme: const PageTransitionsTheme(builders: {
+                TargetPlatform.android: CupertinoPageTransitionsBuilder()
+              })),
           darkTheme: ThemeData(
               brightness: Brightness.dark,
               /* dark theme settings */
               scaffoldBackgroundColor: Colors.black,
-              primarySwatch: Colors.blueGrey),
+              primarySwatch: Colors.blueGrey,
+              pageTransitionsTheme: const PageTransitionsTheme(builders: {
+                TargetPlatform.android: CupertinoPageTransitionsBuilder()
+              })),
           themeMode: ThemeMode.dark,
           home: PageView(
             controller: _controller,
