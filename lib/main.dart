@@ -60,7 +60,8 @@ class TootApp extends StatelessWidget {
               brightness: Brightness.light,
               primarySwatch: Colors.blueGrey,
               pageTransitionsTheme: const PageTransitionsTheme(builders: {
-                TargetPlatform.android: CupertinoPageTransitionsBuilder()
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
               })),
           darkTheme: ThemeData(
               brightness: Brightness.dark,
@@ -68,7 +69,8 @@ class TootApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.black,
               primarySwatch: Colors.blueGrey,
               pageTransitionsTheme: const PageTransitionsTheme(builders: {
-                TargetPlatform.android: CupertinoPageTransitionsBuilder()
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
               })),
           themeMode: ThemeMode.dark,
           home: PageView(
