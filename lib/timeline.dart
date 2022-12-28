@@ -257,7 +257,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                     padding:
                                         const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                     child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(5),
                                         child: Image(
                                             image:
                                                 NetworkImage(media.previewUrl),
