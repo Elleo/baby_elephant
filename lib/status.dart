@@ -122,7 +122,45 @@ class _StatusPageState extends State<StatusPage> {
                                   image: NetworkImage(media.previewUrl),
                                   width:
                                       MediaQuery.of(context).size.width - 20)))
-                  ])
+                  ]),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                          onTap: () {}, child: const Icon(Icons.reply)),
+                      GestureDetector(
+                          onTap: () {},
+                          child: Icon(
+                              widget.statuses[i].isReblogged ?? false
+                                  ? Icons.repeat_on
+                                  : Icons.repeat,
+                              color: widget.statuses[i].isReblogged ?? false
+                                  ? Colors.amber
+                                  : Colors.white)),
+                      GestureDetector(
+                          onTap: () {},
+                          child: Icon(
+                              widget.statuses[i].isFavourited ?? false
+                                  ? Icons.favorite
+                                  : Icons.favorite_outline,
+                              color: widget.statuses[i].isFavourited ?? false
+                                  ? Colors.amber
+                                  : Colors.white)),
+                      GestureDetector(
+                          onTap: () {},
+                          child: Icon(
+                              widget.statuses[i].isBookmarked ?? false
+                                  ? Icons.bookmark_added
+                                  : Icons.bookmark_add_outlined,
+                              color: widget.statuses[i].isBookmarked ?? false
+                                  ? Colors.amber
+                                  : Colors.white)),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
+                  const SizedBox(height: 2)
                 ]))),
         itemCount: widget.statuses.length,
       ),
