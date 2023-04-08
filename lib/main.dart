@@ -14,7 +14,7 @@ Future<void> main() async {
 
 class TootApp extends StatelessWidget {
   TootApp({super.key}) {
-    auth();
+    //auth();
   }
 
   final PageController _controller = PageController(initialPage: 1);
