@@ -25,8 +25,9 @@ import 'package:wearable_rotary/wearable_rotary.dart';
 class StatusPage extends StatefulWidget {
   final mApi.MastodonApi mastodon;
   final List<mApi.Status> statuses;
+  final List<bool> favourited = [];
 
-  const StatusPage({super.key, required this.mastodon, required this.statuses});
+  StatusPage({super.key, required this.mastodon, required this.statuses});
   @override
   State<StatusPage> createState() => _StatusPageState();
 }
@@ -40,6 +41,9 @@ class _StatusPageState extends State<StatusPage> {
   @override
   void initState() {
     super.initState();
+    for (var element in widget.statuses) {
+      widget.favourited.add(element.isFavourited ?? false);
+    }
     fetchReplies();
   }
 
@@ -140,12 +144,26 @@ class _StatusPageState extends State<StatusPage> {
                                   ? Colors.amber
                                   : Colors.white)),
                       GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            if (widget.favourited[i]) {
+                              widget.mastodon.v1.statuses.destroyFavourite(
+                                  statusId: widget.statuses[i].id);
+                              setState(() {
+                                widget.favourited[i] = false;
+                              });
+                            } else {
+                              widget.mastodon.v1.statuses.createFavourite(
+                                  statusId: widget.statuses[i].id);
+                              setState(() {
+                                widget.favourited[i] = true;
+                              });
+                            }
+                          },
                           child: Icon(
-                              widget.statuses[i].isFavourited ?? false
+                              widget.favourited[i]
                                   ? Icons.favorite
                                   : Icons.favorite_outline,
-                              color: widget.statuses[i].isFavourited ?? false
+                              color: widget.favourited[i]
                                   ? Colors.amber
                                   : Colors.white)),
                       GestureDetector(

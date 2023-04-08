@@ -7,14 +7,14 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.5"
+    version: "3.3.6"
   args:
     dependency: transitive
     description:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   async:
     dependency: transitive
     description:
@@ -42,7 +42,7 @@ packages:
       name: checked_yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   cli_util:
     dependency: transitive
     description:
@@ -141,7 +141,7 @@ packages:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.0+2"
+    version: "0.9.1"
   fluttertoast:
     dependency: "direct main"
     description:
@@ -190,7 +190,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.2"
+    version: "3.3.0"
   js:
     dependency: transitive
     description:
@@ -204,7 +204,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.7.0"
+    version: "4.8.0"
   lints:
     dependency: transitive
     description:
@@ -216,11 +216,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "7bc636f77069754bd2db8d7d4d0a9b16e9bbf8d0"
+      ref: "5b126ce"
+      resolved-ref: "5b126ce95a29bc19565c1700ceca7500129b3a2f"
       url: "git@github.com:mastodon-dart/mastodon-api.git"
     source: git
-    version: "0.2.3"
+    version: "0.3.3"
   matcher:
     dependency: transitive
     description:
