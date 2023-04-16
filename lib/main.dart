@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mastodon_api/mastodon_api.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart';
+import 'package:wearable_communicator/wearable_communicator.dart';
 
 import "timeline.dart";
 import "toot.dart";
@@ -14,7 +15,7 @@ Future<void> main() async {
 
 class TootApp extends StatelessWidget {
   TootApp({super.key}) {
-    //auth();
+    auth();
   }
 
   final PageController _controller = PageController(initialPage: 1);
@@ -32,8 +33,13 @@ class TootApp extends StatelessWidget {
 
   void auth() async {
     const platform = MethodChannel('com.mikeasoft.baby_elephant/native');
-    final String result = await platform.invokeMethod("triggerAuth", {});
-    print('RESULT -> $result');
+    await platform.invokeMethod("triggerAuth", {});
+    WearableCommunicator.sendMessage({
+      "command": "triggerAuth",
+    });
+    WearableListener.listenForMessage((msg) {
+      print(msg);
+    });
   }
 
   @override

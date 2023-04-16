@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mastodon_api/mastodon_api.dart' as mApi;
 import 'package:mastodon_oauth2/mastodon_oauth2.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:wearable_communicator/wearable_communicator.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -68,6 +70,8 @@ class _AuthPageState extends State<AuthPage> {
 
                     super.setState(() {
                       accessToken = response.accessToken;
+                      print(accessToken);
+                      WearableCommunicator.sendMessage({"text": accessToken});
                       Navigator.pop(context);
                     });
                   } on PlatformException catch (_) {}
