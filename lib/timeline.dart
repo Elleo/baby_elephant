@@ -56,57 +56,62 @@ class _TimelinePageState extends State<TimelinePage> {
     updateTimeline(true);
   }
 
-  void updateTimeline(bool refresh) async {
-    String? maxId;
-    String? minId;
-    if (widget.statuses.isNotEmpty) {
-      if (refresh) {
-        minId = widget.statuses.first.id;
-      } else {
-        maxId = widget.statuses.last.id;
-      }
-    }
-    try {
-      Future<mApi.MastodonResponse<List<mApi.Status>>> tlFuture;
-      if (widget.timeline == "home") {
-        tlFuture = widget.mastodon.v1.timelines
-            .lookupHomeTimeline(minStatusId: minId, maxStatusId: maxId);
-      } else if (widget.timeline == "local") {
-        tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
-            onlyLocal: true, minStatusId: minId, maxStatusId: maxId);
-      } else if (widget.timeline == "federated") {
-        tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
-            onlyLocal: false, minStatusId: minId, maxStatusId: maxId);
-      } else {
-        return;
-      }
-      tlFuture.then((timeline) => {
-            if (mounted)
-              {
-                setState(() {
-                  timeline.data.forEach((status) {
-                    if (refresh) {
-                      widget.statuses.insert(0, status);
-                    } else {
-                      widget.statuses.add(status);
-                    }
-                  });
-                  if (refresh) {
-                    refreshController.refreshCompleted();
-                  } else {
-                    refreshController.loadComplete();
-                  }
-                })
-              }
-          });
-    } on mApi.DataNotFoundException catch (_) {
-      if (refresh) {
-        refreshController.refreshCompleted();
-      } else {
-        refreshController.loadComplete();
-      }
+void updateTimeline(bool refresh) async {
+  String? maxId;
+  String? minId;
+  if (widget.statuses.isNotEmpty) {
+    if (refresh) {
+      minId = widget.statuses.first.id;
+    } else {
+      maxId = widget.statuses.last.id;
     }
   }
+
+  try {
+    Future<mApi.MastodonResponse<List<mApi.Status>>> tlFuture;
+
+    if (widget.timeline == "home") {
+      tlFuture = widget.mastodon.v1.timelines
+          .lookupHomeTimeline(minStatusId: minId, maxStatusId: maxId);
+    } else if (widget.timeline == "local") {
+      tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
+          onlyLocal: true, minStatusId: minId, maxStatusId: maxId);
+    } else if (widget.timeline == "federated") {
+      tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
+          onlyLocal: false, minStatusId: minId, maxStatusId: maxId);
+    } else {
+      // Assuming widget.timeline contains the list ID for list timelines
+      tlFuture = widget.mastodon.v1.timelines.lookupListTimeline(
+          listId: widget.timeline, minStatusId: minId, maxStatusId: maxId);
+    }
+
+    tlFuture.then((timeline) {
+      if (mounted) {
+        setState(() {
+          timeline.data.forEach((status) {
+            if (refresh) {
+              widget.statuses.insert(0, status);
+            } else {
+              widget.statuses.add(status);
+            }
+          });
+          if (refresh) {
+            refreshController.refreshCompleted();
+          } else {
+            refreshController.loadComplete();
+          }
+        });
+      }
+    });
+  } on mApi.DataNotFoundException catch (_) {
+    if (refresh) {
+      refreshController.refreshCompleted();
+    } else {
+      refreshController.loadComplete();
+    }
+  }
+}
+
 
   void onLoading() async {
     updateTimeline(false);
