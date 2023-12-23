@@ -35,7 +35,17 @@ class TootApp extends StatelessWidget {
   final mastodon = MastodonApi(
     instance: instance,
     bearerToken: accessToken,
-    retryConfig: RetryConfig.ofExponentialBackOffAndJitter(maxAttempts: 5),
+    retryConfig: RetryConfig(
+      maxAttempts: 5,
+      jitter: Jitter(
+        minInSeconds: 2,
+        maxInSeconds: 5,
+      ),
+      onExecute: (event) => print(
+        'Retry after ${event.intervalInSeconds} seconds...'
+        '[${event.retryCount} times]',
+      ),
+    ),
     timeout: const Duration(seconds: 20),
   );
 

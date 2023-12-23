@@ -260,7 +260,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                         borderRadius: BorderRadius.circular(5),
                                         child: Image(
                                             image:
-                                                NetworkImage(media.previewUrl),
+                                                NetworkImage(media.previewUrl ?? 'default_image_url'),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width -
