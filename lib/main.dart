@@ -100,7 +100,7 @@ Future<List<Widget>> _buildPages() async {
 
   // Add a page for each list
   for (var list in userLists) {
-    pages.add(TimelinePage(mastodon: mastodon, statuses: [], timeline: list.title));
+    pages.add(TimelinePage(mastodon: mastodon, statuses: [], timeline: "${list.id}_${list.title}"));
   }
 
   return pages;

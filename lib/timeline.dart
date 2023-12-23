@@ -44,13 +44,18 @@ class _TimelinePageState extends State<TimelinePage> {
   _TimelinePageState() : super();
 
   @override
-  void initState() {
-    super.initState();
-    updateTimeline(false);
-    Fluttertoast.showToast(
-        msg: widget.timeline[0].toUpperCase() + widget.timeline.substring(1),
-        gravity: ToastGravity.BOTTOM);
-  }
+void initState() {
+  super.initState();
+  updateTimeline(false);
+
+  // Splitting the timeline string to extract the title
+  List<String> timelineParts = widget.timeline.split('_');
+  String listTitle = timelineParts.length > 1 ? timelineParts.sublist(1).join("_") : widget.timeline;
+
+  Fluttertoast.showToast(
+      msg: listTitle[0].toUpperCase() + listTitle.substring(1),
+      gravity: ToastGravity.BOTTOM);
+}
 
   void onRefresh() async {
     updateTimeline(true);
@@ -80,9 +85,12 @@ void updateTimeline(bool refresh) async {
       tlFuture = widget.mastodon.v1.timelines.lookupPublicTimeline(
           onlyLocal: false, minStatusId: minId, maxStatusId: maxId);
     } else {
-      // Assuming widget.timeline contains the list ID for list timelines
+      // Extract list ID from the timeline string
+      String listId = widget.timeline.split('_').first;
+
+      // Use listId for fetching the timeline
       tlFuture = widget.mastodon.v1.timelines.lookupListTimeline(
-          listId: widget.timeline, minStatusId: minId, maxStatusId: maxId);
+        listId: listId, minStatusId: minId, maxStatusId: maxId);
     }
 
     tlFuture.then((timeline) {
