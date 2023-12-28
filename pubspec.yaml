@@ -18,6 +18,7 @@ dependencies:
   wearable_rotary: ^2.0.0
   flutter_launcher_icons: ^0.13.1
   fluttertoast: ^8.1.2
+  http: ^0.13.3  # Check for the latest version
 
 dev_dependencies:
   flutter_test:
