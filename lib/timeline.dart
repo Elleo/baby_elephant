@@ -259,8 +259,8 @@ class _TimelinePageState extends State<TimelinePage> {
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(5),
                                         child: Image(
-                                            image:
-                                                NetworkImage(media.previewUrl),
+                                            image: NetworkImage(
+                                                media.previewUrl ?? ''),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width -
