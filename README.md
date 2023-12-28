@@ -5,7 +5,7 @@
 
 <img align="right" src="/docs/hometimeline.jpg" alt="The home timeline being displayed on a Pixel Watch" width="320px" />
 
-A [Mastodon](https://joinmastodon.org) client for WearOS based smart watches.
+A [Mastodon](https://joinmastodon.org) client for WearOS based smartwatches.
 
 ## Installation
 
@@ -22,8 +22,8 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [ ] Notifications
 - [X] Local timeline
 - [X] Federated timeline
-- [ ] Render images in toots
-- [ ] Show boosted posts
+- [X] Render images in toots
+- [X] Show boosted posts
 - [X] Handle CWs
 - [ ] Expanded toot view (see favourites, boosts, replies, etc.)
 - [ ] Sending replies
