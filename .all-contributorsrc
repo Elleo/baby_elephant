@@ -18,6 +18,16 @@
         "platform",
         "projectManagement"
       ]
+    },
+    {
+      "login": "kephale",
+      "name": "Kyle I S Harrington",
+      "avatar_url": "https://avatars.githubusercontent.com/u/400105?v=4",
+      "profile": "https://kyleharrington.com",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -25,5 +35,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "baby_elephant",
-  "projectOwner": "Elleo"
+  "projectOwner": "Elleo",
+  "commitType": "docs"
 }
