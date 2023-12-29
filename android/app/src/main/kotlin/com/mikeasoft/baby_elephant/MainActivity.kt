@@ -59,47 +59,16 @@ class MainActivity: FlutterActivity() {
             else -> super.onGenericMotionEvent(event)
         }
     }
-
-    @ExperimentalStdlibApi
+    
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine);
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler{
             call, result ->
-            when {
-                call.method.equals("triggerAuth") -> {
-                    triggerAuth(call, result);
-                }
+            if (call.method == "launchStore") {
+                openAppInStoreOnPhone();
+            } else {
+                result.notImplemented();
             }
-        }
-    }
-
-    private fun triggerAuth(call: MethodCall, result: MethodChannel.Result) {
-
-        runBlocking() {
-            checkIfPhoneHasApp(this)
-        }
-
-        if (androidPhoneNodeWithApp == null) {
-            openAppInStoreOnPhone();
-        }
-
-        result.success("WHAT");
-    }
-
-    private fun checkIfPhoneHasApp(scope: CoroutineScope) = scope.launch {
-        Log.d(TAG, "checkIfPhoneHasApp()")
-
-        try {
-            val capabilityInfo = capabilityClient
-                .getCapability(CAPABILITY_PHONE_APP, CapabilityClient.FILTER_ALL)
-                .await()
-
-            Log.d(TAG, "Capability request succeeded.")
-            androidPhoneNodeWithApp = capabilityInfo.nodes.firstOrNull()
-        } catch (cancellationException: CancellationException) {
-            // Request was cancelled normally
-        } catch (throwable: Throwable) {
-            Log.d(TAG, "Capability request failed to return any results.")
         }
     }
 

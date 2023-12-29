@@ -20,8 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mastodon_api/mastodon_api.dart' as mApi;
 import 'package:mastodon_oauth2/mastodon_oauth2.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:wearable_communicator/wearable_communicator.dart';
+import 'package:flutter_wear_os_connectivity/flutter_wear_os_connectivity.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -35,6 +34,17 @@ class _AuthPageState extends State<AuthPage> {
   String? refreshToken;
 
   TextEditingController textController = TextEditingController();
+
+  void sendAuth(String accessToken, String instance) async {
+    FlutterWearOsConnectivity phoneConnection = FlutterWearOsConnectivity();
+
+    phoneConnection.configureWearableAPI();
+
+    await phoneConnection.syncData(
+        path: "/auth-data",
+        data: {"accessToken": accessToken, "instance": instance},
+        isUrgent: true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +96,11 @@ class _AuthPageState extends State<AuthPage> {
                     final response = await oauth2.executeAuthCodeFlow(
                         scopes: [Scope.read, Scope.write, Scope.push]);
 
+                    sendAuth(response.accessToken, textController.text);
+
                     super.setState(() {
                       accessToken = response.accessToken;
                       print(accessToken);
-                      WearableCommunicator.sendMessage({"text": accessToken});
                       Navigator.pop(context);
                     });
                   } on PlatformException catch (_) {}

@@ -10,11 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flutter_icons: ^1.1.0
   flutter_native_splash: ^2.2.16
   mastodon_oauth2: ^0.1.1
   mastodon_api: ^0.2.2
-  wearable_communicator: ^0.1.1
+  flutter_wear_os_connectivity: ^1.0.0
 
 dev_dependencies:
   flutter_test:

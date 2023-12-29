@@ -17,8 +17,6 @@
  */
 
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:wearable_communicator/wearable_communicator.dart';
 
 import 'auth.dart';
 
@@ -51,16 +49,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    WearableListener.listenForMessage((msg) {
-      print(msg);
-      if (msg['command'] == "triggerAuth") {
-        print("TRIGGERING AUTH");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AuthPage()),
-        );
-      }
-    });
     return Scaffold(
       appBar: AppBar(
         title: const Text("Baby Elephant Friend"),
