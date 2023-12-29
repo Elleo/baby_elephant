@@ -40,15 +40,19 @@ class _TootAppState extends State<TootApp> {
   String? accessToken;
   String? instance;
 
+  static const platform = MethodChannel('com.mikeasoft.baby_elephant/native');
+
   void loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     accessToken = prefs.getString("accessToken");
     instance = prefs.getString("instance");
+
+    if (accessToken == null) {
+      auth();
+    }
   }
 
   void auth() async {
-    const platform = MethodChannel('com.mikeasoft.baby_elephant/native');
-
     FlutterWearOsConnectivity phoneConnection = FlutterWearOsConnectivity();
 
     phoneConnection.configureWearableAPI();
@@ -82,7 +86,9 @@ class _TootAppState extends State<TootApp> {
   }
 
   void launchPhoneAuthentication(FlutterWearOsConnectivity phoneConnection,
-      CapabilityInfo capabilityInfo) {}
+      CapabilityInfo capabilityInfo) {
+    platform.invokeMethod("triggerAuth", {});
+  }
 
   @override
   Widget build(BuildContext context) {

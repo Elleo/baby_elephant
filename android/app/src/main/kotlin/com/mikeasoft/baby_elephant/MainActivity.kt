@@ -66,6 +66,8 @@ class MainActivity: FlutterActivity() {
             call, result ->
             if (call.method == "launchStore") {
                 openAppInStoreOnPhone();
+            } else if (call.method == "triggerAuth") {
+                triggerAuth();
             } else {
                 result.notImplemented();
             }
@@ -77,13 +79,38 @@ class MainActivity: FlutterActivity() {
 
         val intent = when (PhoneTypeHelper.getPhoneDeviceType(applicationContext)) {
             PhoneTypeHelper.DEVICE_TYPE_ANDROID -> {
-                Log.d(TAG, "\tDEVICE_TYPE_ANDROID")
                 // Create Remote Intent to open Play Store listing of app on remote device.
                 Intent(Intent.ACTION_VIEW)
                     .addCategory(Intent.CATEGORY_BROWSABLE)
                     .setData(Uri.parse(ANDROID_MARKET_APP_URI))
             } else -> {
-                Log.d(TAG, "\tDEVICE_TYPE_ERROR_UNSUPPORTED")
+                return
+            }
+        }
+        
+        try {
+            remoteActivityHelper.startRemoteActivity(intent)
+            ConfirmationOverlay().showOn(this@MainActivity)
+        } catch (cancellationException: CancellationException) {
+            // Request was cancelled normally
+            throw cancellationException
+        } catch (throwable: Throwable) {
+            ConfirmationOverlay()
+                .setType(ConfirmationOverlay.FAILURE_ANIMATION)
+                .showOn(this@MainActivity)
+        }
+    }
+
+    private fun triggerAuth() {
+        Log.d(TAG, "triggerAuth()")
+
+        val intent = when (PhoneTypeHelper.getPhoneDeviceType(applicationContext)) {
+            PhoneTypeHelper.DEVICE_TYPE_ANDROID -> {
+                // Open Baby Elephant Friend on phone
+                Intent(Intent.ACTION_VIEW)
+                    .addCategory(Intent.CATEGORY_BROWSABLE)
+                    .setData(Uri.parse("babyelephant://auth"))
+            } else -> {
                 return
             }
         }
@@ -103,7 +130,6 @@ class MainActivity: FlutterActivity() {
 
     companion object {
         private const val TAG = "BabyElephantMainActivity"
-        private const val CAPABILITY_PHONE_APP = "baby_elephant_auth"
         private const val ANDROID_MARKET_APP_URI = "market://details?id=com.mikeasoft.baby_elephant"
     }
 }
