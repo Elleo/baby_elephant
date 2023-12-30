@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -47,8 +47,7 @@ android {
         applicationId "com.mikeasoft.baby_elephant"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        // minSdkVersion flutter.minSdkVersion
-        minSdkVersion 21
+        minSdkVersion 25
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -69,4 +68,13 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.wear:wear:1.2.0"
+    implementation "androidx.wear:wear-phone-interactions:1.1.0-alpha03"
+    implementation "androidx.wear:wear-remote-interactions:1.0.0"
+    implementation 'com.google.android.gms:play-services-wearable:17.0.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation "com.google.android.gms:play-services-wearable:18.0.0"
+    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
 }

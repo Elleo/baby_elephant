@@ -9,9 +9,9 @@ A [Mastodon](https://joinmastodon.org) client for WearOS based smartwatches.
 
 ## Installation
 
-This project is still in very early development, as such the authentication flow isn't fully implemented yet. Eventually the project will support authentication via a companion phone app and be available through the Play Store, until then it's probably only of interest to very technical users.
+This project is still in an early stage of development, as such it's not yet available in the Play store.
 
-Currently to log in you need to go to the *Development* settings on your mastodon instance and create a new application with read/write/follow/push permissions. Then copy the `lib/config.dart.sample` file to `lib/config.dart` and enter your *access token* (don't share this with anyone!) and *instance*. You can then compile the app by running `flutter build apk --release`. This will create an apk in `build/app/outputs/apk/release` that you can then install to your watch.
+You can download pre-compiled APKs from the [release page](https://github.com/Elleo/baby_elephant/releases). Baby Elephant consists of two parts, _baby\_elephant.apk_ and _baby\_elephant\_friend.apk_. Install _baby\_elephant.apk_ on your watch, and _baby\_elephant\_friend.apk_ on your phone.
 
 ## Roadmap
 
@@ -28,7 +28,9 @@ Currently to log in you need to go to the *Development* settings on your mastodo
 - [ ] Expanded toot view (see favourites, boosts, replies, etc.)
 - [ ] Sending replies
 - [ ] Support polls
-- [ ] Companion client for authentication
+- [X] Companion client for authentication
+- [ ] Lists
+- [ ] Publish in Play store
 
 ## Contributors
 

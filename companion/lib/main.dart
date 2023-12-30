@@ -16,7 +16,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:receive_intent/receive_intent.dart' as ri;
+
 import 'auth.dart';
 
 void main() {
@@ -46,6 +50,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late StreamSubscription sub;
+
+  @override
+  void initState() {
+    super.initState();
+    initReceiveIntent();
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+    super.dispose();
+  }
+
+  Future<void> initReceiveIntent() async {
+    final receivedIntent = await ri.ReceiveIntent.getInitialIntent();
+    if (receivedIntent != null && receivedIntent.isNotNull) {
+      if (receivedIntent.data == "babyelephant://auth") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const AuthPage()));
+      }
+    }
+    sub = ri.ReceiveIntent.receivedIntentStream.listen((ri.Intent? intent) {
+      if (receivedIntent?.data == "babyelephant://auth") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const AuthPage()));
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

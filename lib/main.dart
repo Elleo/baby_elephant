@@ -1,7 +1,7 @@
 /*
  * This file is part of Baby Elephant, a Mastodon client for smartwatches.
  *
- * Copyright (c) 2022 Mike Sheldon <mike@mikeasoft.com>
+ * Copyright (c) 2022-2023 Mike Sheldon <mike@mikeasoft.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,43 +17,95 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:mastodon_api/mastodon_api.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import "timeline.dart";
-import "toot.dart";
-import "config.dart";
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_wear_os_connectivity/flutter_wear_os_connectivity.dart';
 
-void main() {
-  runApp(TootApp());
+import 'pages.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const TootApp());
 }
 
-class TootApp extends StatelessWidget {
-  TootApp({super.key});
+class TootApp extends StatefulWidget {
+  const TootApp({super.key});
 
-  final PageController _controller = PageController(initialPage: 1);
+  @override
+  State<TootApp> createState() => _TootAppState();
+}
 
-  final mastodon = MastodonApi(
-    instance: instance,
-    bearerToken: accessToken,
-    retryConfig: RetryConfig(
-      maxAttempts: 5,
-      jitter: Jitter(
-        minInSeconds: 2,
-        maxInSeconds: 5,
-      ),
-      onExecute: (event) => print(
-        'Retry after ${event.intervalInSeconds} seconds...'
-        '[${event.retryCount} times]',
-      ),
-    ),
-    timeout: const Duration(seconds: 20),
-  );
+class _TootAppState extends State<TootApp> {
+  String? accessToken;
+  String? instance;
 
-  final List<Status> homeStatuses = [];
-  final List<Status> localStatuses = [];
-  final List<Status> federatedStatuses = [];
+  static const platform = MethodChannel('com.mikeasoft.baby_elephant/native');
 
-  // This widget is the root of your application.
+  @override
+  void initState() {
+    super.initState();
+    loadPreferences();
+  }
+
+  void loadPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      accessToken = prefs.getString("accessToken");
+      instance = prefs.getString("instance");
+    });
+
+    if (accessToken == null) {
+      auth();
+    }
+  }
+
+  void savePreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (accessToken != null && instance != null) {
+      prefs.setString("accessToken", accessToken!);
+      prefs.setString("instance", instance!);
+    }
+  }
+
+  void auth() async {
+    FlutterWearOsConnectivity phoneConnection = FlutterWearOsConnectivity();
+
+    phoneConnection.configureWearableAPI();
+
+    phoneConnection
+        .dataChanged(
+            pathURI: Uri(scheme: "wear", host: "*", path: "/auth-data"))
+        .listen((dataEvents) {
+      for (var event in dataEvents) {
+        setState(() {
+          instance = event.dataItem.mapData['instance'];
+          accessToken = event.dataItem.mapData['accessToken'];
+          savePreferences();
+        });
+      }
+    });
+
+    CapabilityInfo? capabilityInfo =
+        await phoneConnection.findCapabilityByName("baby_elephany_auth");
+
+    if (capabilityInfo == null) {
+      platform.invokeMethod("launchStore", {});
+      phoneConnection
+          .capabilityChanged(capabilityName: "baby_elephany_auth")
+          .listen((capabilityInfo) {
+        launchPhoneAuthentication(phoneConnection, capabilityInfo);
+      });
+    } else {
+      launchPhoneAuthentication(phoneConnection, capabilityInfo);
+    }
+  }
+
+  void launchPhoneAuthentication(FlutterWearOsConnectivity phoneConnection,
+      CapabilityInfo capabilityInfo) {
+    platform.invokeMethod("triggerAuth", {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshConfiguration(
@@ -74,22 +126,13 @@ class TootApp extends StatelessWidget {
               scaffoldBackgroundColor: Colors.black,
               primarySwatch: Colors.blueGrey),
           themeMode: ThemeMode.dark,
-          home: PageView(
-            controller: _controller,
-            children: [
-              TootPage(mastodon: mastodon),
-              TimelinePage(
-                  mastodon: mastodon, statuses: homeStatuses, timeline: "home"),
-              TimelinePage(
-                  mastodon: mastodon,
-                  statuses: localStatuses,
-                  timeline: "local"),
-              TimelinePage(
-                  mastodon: mastodon,
-                  statuses: federatedStatuses,
-                  timeline: "federated"),
-            ],
-          ),
+          home: accessToken != null && instance != null
+              ? Pages(accessToken: accessToken!, instance: instance!)
+              : ElevatedButton(
+                  onPressed: () {
+                    auth();
+                  },
+                  child: const Text("Log in on phone")),
         ));
   }
 }
