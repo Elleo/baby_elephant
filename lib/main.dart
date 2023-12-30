@@ -42,13 +42,29 @@ class _TootAppState extends State<TootApp> {
 
   static const platform = MethodChannel('com.mikeasoft.baby_elephant/native');
 
+  @override
+  void initState() {
+    super.initState();
+    loadPreferences();
+  }
+
   void loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    accessToken = prefs.getString("accessToken");
-    instance = prefs.getString("instance");
+    setState(() {
+      accessToken = prefs.getString("accessToken");
+      instance = prefs.getString("instance");
+    });
 
     if (accessToken == null) {
       auth();
+    }
+  }
+
+  void savePreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (accessToken != null && instance != null) {
+      prefs.setString("accessToken", accessToken!);
+      prefs.setString("instance", instance!);
     }
   }
 
@@ -65,6 +81,7 @@ class _TootAppState extends State<TootApp> {
         setState(() {
           instance = event.dataItem.mapData['instance'];
           accessToken = event.dataItem.mapData['accessToken'];
+          savePreferences();
         });
       }
     });
