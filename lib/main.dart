@@ -62,7 +62,6 @@ class _TootAppState extends State<TootApp> {
             pathURI: Uri(scheme: "wear", host: "*", path: "/auth-data"))
         .listen((dataEvents) {
       for (var event in dataEvents) {
-        print(event.dataItem.mapData);
         setState(() {
           instance = event.dataItem.mapData['instance'];
           accessToken = event.dataItem.mapData['accessToken'];
