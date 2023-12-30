@@ -35,7 +35,6 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   _AuthPageState() : super();
   String? accessToken;
-  String? refreshToken;
 
   TextEditingController textController = TextEditingController();
   GlobalKey autocompleteKey = GlobalKey();
@@ -54,7 +53,7 @@ class _AuthPageState extends State<AuthPage> {
         timeout: const Duration(seconds: 20));
     Future<mApi.MastodonResponse<mApi.RegisteredApplication>> clientFuture =
         mastodon.v1.apps.createApplication(
-            clientName: "Baby Elephant Staging",
+            clientName: "Baby Elephant",
             redirectUri: 'com.mikeasoft.babyelephant.oauth://callback/',
             scopes: [mApi.Scope.read, mApi.Scope.write, mApi.Scope.push],
             websiteUrl: "https://github.com/Elleo/baby_elephant");
