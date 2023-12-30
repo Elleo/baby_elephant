@@ -97,17 +97,6 @@ class _HomePageState extends State<HomePage> {
                   'This app is a companion to the Baby Elephant app for Wear OS smartwatches.\n\nStart Baby Elephant on your watch and this app will help you log in to your Mastodon account.'),
             ),
             const SizedBox(height: 100),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                    padding: const EdgeInsets.fromLTRB(40, 20, 40, 20)),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AuthPage()),
-                  );
-                },
-                child: const Text("Launch Auth")),
           ],
         ),
       ),
