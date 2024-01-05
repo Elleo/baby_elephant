@@ -1,7 +1,7 @@
 /*
  * This file is part of Baby Elephant, a Mastodon client for smartwatches.
  *
- * Copyright (c) 2022 Mike Sheldon <mike@mikeasoft.com>
+ * Copyright (c) 2022 - 2024 Mike Sheldon <mike@mikeasoft.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,13 +84,13 @@ class _TimelinePageState extends State<TimelinePage> {
             if (mounted)
               {
                 setState(() {
-                  timeline.data.forEach((status) {
+                  for (var status in timeline.data.reversed) {
                     if (refresh) {
                       widget.statuses.insert(0, status);
                     } else {
                       widget.statuses.add(status);
                     }
-                  });
+                  }
                   if (refresh) {
                     refreshController.refreshCompleted();
                   } else {
