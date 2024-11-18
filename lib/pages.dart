@@ -3,6 +3,7 @@ import 'package:mastodon_api/mastodon_api.dart';
 
 import "timeline.dart";
 import "toot.dart";
+import 'logout.dart';
 
 class Pages extends StatefulWidget {
   const Pages({super.key, required this.instance, required this.accessToken});
@@ -58,6 +59,7 @@ class _PagesState extends State<Pages> {
             mastodon: mastodon,
             statuses: federatedStatuses,
             timeline: "federated"),
+        LogoutPage(mastodon: mastodon)
       ],
     );
   }
